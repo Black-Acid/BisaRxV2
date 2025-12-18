@@ -34,13 +34,14 @@ async def register_user(user: sma.LoginRequest, db: orm.Session = Depends(sv.get
 
 
 @app.post("/api/login")
-async def login(form_data: security.OAuth2PasswordRequestForm = Depends(), db: orm.Session = Depends(sv.get_db)):
-    db_user = await sv.login(form_data.username, form_data.password, db)
-    
+async def login(
+    form_data: sma.LoginRequest,
+    db: orm.Session = Depends(sv.get_db)
+):
+    db_user = await sv.login(form_data.email, form_data.password, db)
     if not db_user:
         raise HTTPException(status_code=401, detail="Invalid credentials")
     return await sv.create_token(db_user)
-
 
 @app.post("/chat", response_model=sma.ChatResponse)
 @limiter.limit("5/minute")  # Rate limit
