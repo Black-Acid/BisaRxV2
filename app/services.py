@@ -1,6 +1,6 @@
-import models
-from database import Base, engine, SessionLocal
-import schemas as sma
+from app import models
+from app.database import Base, engine, SessionLocal
+from app import schemas as sma
 from sqlalchemy import orm
 from passlib.context import CryptContext
 from sqlalchemy.exc import SQLAlchemyError

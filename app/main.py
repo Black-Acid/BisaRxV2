@@ -1,12 +1,12 @@
 from fastapi import FastAPI, Depends, HTTPException, security, APIRouter, Request, Query
 from sqlalchemy import orm
-import services as sv
+from app import services as sv
 import schemas as sma
 from slowapi import Limiter
 from slowapi.util import get_remote_address
 from slowapi.errors import RateLimitExceeded
 from handlers import _rate_limit_exceeded_handler
-import models
+from app import models
 from uuid import UUID
 
 limiter =Limiter(key_func=get_remote_address)

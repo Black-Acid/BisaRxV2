@@ -9,7 +9,7 @@ from enum import Enum
 import uuid
 from passlib.context import CryptContext
 
-from database import Base
+from app.database import Base
 
 
 class SenderType(str, Enum):
