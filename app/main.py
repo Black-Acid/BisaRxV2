@@ -5,7 +5,7 @@ import app.schemas as sma
 from slowapi import Limiter
 from slowapi.util import get_remote_address
 from slowapi.errors import RateLimitExceeded
-from handlers import _rate_limit_exceeded_handler
+from app.handlers import _rate_limit_exceeded_handler
 from app import models
 from uuid import UUID
 
