@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Depends, HTTPException, security, APIRouter, Request, Query
 from sqlalchemy import orm
 from app import services as sv
-import schemas as sma
+import app.schemas as sma
 from slowapi import Limiter
 from slowapi.util import get_remote_address
 from slowapi.errors import RateLimitExceeded
