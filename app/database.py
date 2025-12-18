@@ -1,5 +1,5 @@
 import sqlalchemy as sql
-from sqlalchemy import orm, create_engine
+from sqlalchemy import orm, create_engine, text
 from sqlalchemy.orm import DeclarativeBase
 from sqlalchemy.exc import OperationalError
 import time
@@ -10,20 +10,20 @@ def create_engine_with_retry(url, retries=5, delay=2):
         try:
             engine = create_engine(
                 url,
-                pool_pre_ping=True,  # ensures idle connections are checked
-                pool_size=5,         # adjust based on expected load
+                pool_pre_ping=True,
+                pool_size=5,
                 max_overflow=10
             )
-            # Test the connection
+            # ✅ Use text() for raw SQL
             with engine.connect() as conn:
-                conn.execute("SELECT 1")
+                conn.execute(text("SELECT 1"))
             return engine
         except OperationalError as e:
             print(f"Database connection failed (attempt {attempt + 1}/{retries}): {e}")
             time.sleep(delay)
     raise Exception("Could not connect to the database after several attempts.")
 
-# Create resilient engine
+# Engine & Session
 engine = create_engine_with_retry(DB_URL)
 
 SessionLocal = orm.sessionmaker(bind=engine, autoflush=False, autocommit=False)
